@@ -2,7 +2,7 @@
 estado_inicial((2,2)).
 
 %estado final.
-estado_final((5,5)).
+estado_final((2,3)).
 
 %tabuleiro nxn.
 dimensao(5,5).
@@ -27,35 +27,22 @@ pos_validas((L,C),(Lf,Cf)):-
 
 %op(Estado_act,operador,Estado_seg,Custo).
 op((L,C), moveD, (Lf,Cf),1) :-
-	pos_validas((L,C),(Lf,Cf)),
+	%pos_validas((L,C),(Lf,Cf)),
 	L=Lf,
 	Cf is C+1, 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveE, (Lf,Cf),1) :-
-	pos_validas((L,C),(Lf,Cf)),
+	%pos_validas((L,C),(Lf,Cf)),
 	L=Lf,
 	Cf is C-1, 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveCima, (Lf,Cf),1) :-
-	pos_validas((L,C),(Lf,Cf)),
+	%pos_validas((L,C),(Lf,Cf)),
 	C=Cf,
 	Lf is L-1, 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveBaixo, (Lf,Cf),1) :-
-	pos_validas((L,C),(Lf,Cf)),
+	%pos_validas((L,C),(Lf,Cf)),
 	C=Cf,
 	Lf is L+1, 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
-
-%heuristica para estimar distancia d eum estado ao estado final h(Estado,Valor)
-h(A,B):-h1(A,B).
-h1((L,C),Val):- 
-	estado_final((Lf,Cf)), 
-	distancia_Nsalas(L,C,Lf,Cf,Val).
-
-distancia_Nsalas(L,C,Lf,Cf,Custo):- 
-	DistC is abs(L-Lf),
-	DistL is abs(C-Cf),
-	TotalDist is DistC + DistL,
-	Custo = TotalDist.
-	

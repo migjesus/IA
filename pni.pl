@@ -9,14 +9,23 @@
 %representacao dos nos
 %no(Estado,no_pai,OperadorCusto,Profundidade)
 :- dynamic(contador/2).
+:- dynamic(max/1).
 
 contador(c,0).
+contador(max,0).
 
 inc(C):-
 	contador(C,Val),
 	retract(contador(C,Val)),
 	ValInc is Val+1,
 	assertz(contador(C,ValInc)).
+
+dec(C):-
+  contador(C,Val),
+  retract(contador(C,Val)),
+  ValInc is Val-1,
+  assertz(contador(C,ValInc)).
+
 
 reset(C):-
 	retract(contador(C,_)),
@@ -33,6 +42,20 @@ pesquisa(Problema,Alg):-
   escreve_seq_solucao(Solucao).
 
 
+max_compare(L):-
+  list_counter(L,X),
+  contador(max,Val),
+  X>Val,
+  retract(contador(max,Val)),
+  assertz(contador(max,X)).
+  max_compare(L).
+
+% contador de elementos de uma lista 
+list_counter([],0).
+list_counter([H|T],X):-
+    list_counter(T,R),
+    X is R+1.
+
 
 
 pesquisa_it(Ln,Sol,P):- pesquisa_pLim(Ln,Sol,P).
@@ -47,8 +70,9 @@ pesquisa_largura([no(E,Pai,Op,C,P)|_],no(E,Pai,Op,C,P)):- estado_final(E).
 
 pesquisa_largura([E|R],Sol):- expande(E,Lseg), esc(E),
                               insere_fim(Lseg,R,Resto),
-          
+                              max_compare(Resto),
                               pesquisa_largura(Resto,Sol).
+
 
 expande(no(E,Pai,Op,C,P),L):- findall(no(En,no(E,Pai,Op,C,P),Opn,Cnn,P1),
                                     (op(E,Opn,En,Cn),P1 is P+1, Cnn is Cn+C),
