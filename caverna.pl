@@ -23,26 +23,30 @@ pos_validas((L,C),(Lf,Cf)):-
 	X @>= L,
 	Y @>= C,
 	X @>= Lf,
-	Y @>= Cf.
+	Y @>= Cf,
+	L@>0,
+	C@>0,
+	Lf@>0,
+	Cf@>0.
 
 %op(Estado_act,operador,Estado_seg,Custo).
 op((L,C), moveD, (Lf,Cf),1) :-
-	%pos_validas((L,C),(Lf,Cf)),
 	L=Lf,
 	Cf is C+1, 
+	pos_validas((L,C),(Lf,Cf)),
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveE, (Lf,Cf),1) :-
-	%pos_validas((L,C),(Lf,Cf)),
 	L=Lf,
 	Cf is C-1, 
+	pos_validas((L,C),(Lf,Cf)),
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveCima, (Lf,Cf),1) :-
-	%pos_validas((L,C),(Lf,Cf)),
 	C=Cf,
 	Lf is L-1, 
+	pos_validas((L,C),(Lf,Cf)),
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 op((L,C), moveBaixo, (Lf,Cf),1) :-
-	%pos_validas((L,C),(Lf,Cf)),
 	C=Cf,
-	Lf is L+1, 
+	Lf is L+1,
+	pos_validas((L,C),(Lf,Cf)), 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).

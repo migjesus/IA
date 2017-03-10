@@ -11,6 +11,8 @@
 :- dynamic(contador/2).
 :- dynamic(max/1).
 
+
+
 contador(c,0).
 contador(max,0).
 
@@ -62,7 +64,15 @@ pesquisa_it(Ln,Sol,P):- pesquisa_pLim(Ln,Sol,P).
 pesquisa_it(Ln,Sol,P):- P1 is P+1, pesquisa_it(Ln,Sol,P1).
 pesquisa(it,Ln,Sol):- pesquisa_it(Ln,Sol,1).
 pesquisa(largura,Ln,Sol):- pesquisa_largura(Ln,Sol).
+pesquisa(profundidade,Ln,Sol):-pesquisa_profundidade(Ln,Sol).
 
+%pesquisa_profundidade.
+pesquisa_profundidade([no(E,Pai,Op,C,P)|_],no(E,Pai,Op,C,P)):- estado_final(E).
+
+pesquisa_profundidade([E|R],Sol):- expande(E,Lseg), esc(E),
+                              insere_fim(R,Lseg,Resto),
+                              max_compare(Resto),
+                              pesquisa_profundidade(Resto,Sol).
 
 
 %pesquisa_largura([],_):- !,fail.
@@ -91,7 +101,6 @@ pesquisa_pLim([no(E,Pai,Op,C,P)|_],no(E,Pai,Op,C,P),_):- estado_final(E).
 
 pesquisa_pLim([E|R],Sol,Pl):- expandePl(E,Lseg,Pl), esc(E),
                               insere_fim(R,Lseg,Resto), 
-                              
                               pesquisa_pLim(Resto,Sol,Pl).
 
 
