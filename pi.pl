@@ -9,6 +9,47 @@
 %representacao dos nos
 %no(Estado,no_pai,Operador,Custo,H+C,Profundidade)
 
+:- dynamic(contador/2).
+
+
+contador(d,0).
+contador(imax,0).
+
+inc(C):-
+	contador(C,Val),
+	retract(contador(C,Val)),
+	ValInc is Val+1,
+	assertz(contador(C,ValInc)).
+
+dec(C):-
+  contador(C,Val),
+  retract(contador(C,Val)),
+  ValInc is Val-1,
+  assertz(contador(C,ValInc)).
+
+
+reset(C):-
+	retract(contador(C,_)),
+	assertz(contador(C,0)).
+
+getValue(C,Y):-
+	contador(C,Y).
+
+max_compare(L):-
+  list_counter(L,X),
+  contador(max,Val),
+  X>Val,
+  retract(contador(max,Val)),
+  assertz(contador(max,X)).
+  max_compare(L).
+
+% contador de elementos de uma lista 
+list_counter([],0).
+list_counter([H|T],X):-
+    list_counter(T,R),
+    X is R+1.
+
+
 pesquisa(Problema,Alg):-
   consult(Problema),
   estado_inicial(S0),
@@ -23,6 +64,7 @@ pesquisa_a([no(E,Pai,Op,C,HC,P)|_],no(E,Pai,Op,C,HC,P)):- estado_final(E).
 
 pesquisa_a([E|R],Sol):- expande(E,Lseg), esc(E),
                               insere_ord(Lseg,R,Resto),
+                              max_compare(Resto),
                               pesquisa_a(Resto,Sol).
 
 expande(no(E,Pai,Op,C,HC,P),L):- findall(no(En,
@@ -49,4 +91,4 @@ escreve_seq_accoes([]).
 escreve_seq_accoes(no(E,Pai,Op,_,_,_)):- escreve_seq_accoes(Pai),
                                               write(e(Op,E)),nl.
 
-esc(A):- write(A), nl.
+esc(A):- write(A), nl, inc(d).
