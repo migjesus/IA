@@ -2,7 +2,7 @@
 estado_inicial((2,2)).
 
 %estado final.
-estado_final((2,3)).
+estado_final((5,5)).
 
 %tabuleiro nxn.
 dimensao(5,5).
@@ -50,3 +50,27 @@ op((L,C), moveBaixo, (Lf,Cf),1) :-
 	Lf is L+1,
 	pos_validas((L,C),(Lf,Cf)), 
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
+
+%heuristica para estimar distancia d eum estado ao estado final h(Estado,Valor)
+h(A,B):-h2(A,B).
+
+h1((L,C),Val):- 
+	estado_final((Lf,Cf)), 
+	distancia_Nsalas(L,C,Lf,Cf,Val).
+
+distancia_Nsalas(L,C,Lf,Cf,Custo):- 
+	DistC is abs(L-Lf),
+	DistL is abs(C-Cf),
+	TotalDist is DistC + DistL,
+	Custo = TotalDist.
+
+%heuristica para estimar distancia com base na dist el linha recta	
+h2((L,C),Val):-
+	estado_final((Lf,Cf)),
+	distancia_l_recta(L,C,Lf,Cf,Val).
+
+distancia_l_recta(L,C,Lf,Cf,Custo):- 
+	DistC is (L-Lf)*(L-Lf),
+	DistL is (C-Cf)*(C-Cf),
+	TotalDist is sqrt(DistC + DistL),
+	Custo = TotalDist.
