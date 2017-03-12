@@ -37,11 +37,11 @@ getValue(C,Y):-
 
 max_compare(L):-
   list_counter(L,X),
-  contador(max,Val),
+  contador(imax,Val),
   X>Val,
-  retract(contador(max,Val)),
-  assertz(contador(max,X)).
-  max_compare(L).
+  retract(contador(imax,Val)),
+  assertz(contador(imax,X)).
+max_compare(_).
 
 % contador de elementos de uma lista 
 list_counter([],0).
