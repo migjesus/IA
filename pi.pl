@@ -43,6 +43,7 @@ max_compare(L):-
   assertz(contador(imax,X)).
 max_compare(_).
 
+
 % contador de elementos de uma lista 
 list_counter([],0).
 list_counter([H|T],X):-
