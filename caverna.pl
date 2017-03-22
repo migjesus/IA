@@ -2,10 +2,10 @@
 estado_inicial((2,2)).
 
 %estado final.
-estado_final((5,5)).
+estado_final((5,6)).
 
 %tabuleiro nxn.
-dimensao(5,5).
+dimensao(6,6).
 
 %portas bloqueadas.
 porta_bloqueada((1,2),(1,3)).
@@ -16,6 +16,9 @@ porta_bloqueada((3,4),(4,4)).
 porta_bloqueada((4,4),(3,4)).
 porta_bloqueada((4,5),(3,5)).
 porta_bloqueada((3,5),(4,5)).
+porta_bloqueada((2,2),(3,2)).
+porta_bloqueada((3,2),(2,2)).
+
 
 %verificar se pos actual e pos final estao dentro das dimensoes do tabuleiro.
 pos_validas((L,C),(Lf,Cf)):-
@@ -52,7 +55,7 @@ op((L,C), moveBaixo, (Lf,Cf),1) :-
 	\+ porta_bloqueada((L,C),(Lf,Cf)).
 
 %heuristica para estimar distancia d eum estado ao estado final h(Estado,Valor)
-h(A,B):-h2(A,B).
+h(A,B):-h1(A,B).
 
 h1((L,C),Val):- 
 	estado_final((Lf,Cf)), 
