@@ -10,6 +10,7 @@ estado_inicial(e([
 ve_restricoes(e(Vni,Vi)):-
 	dif(Vi),
 	testar(Vi,15).
+
 %Dif.
 dif(Vi):-
 	\+ (member(v(var(X),_,Vx),Vi),
@@ -17,7 +18,7 @@ dif(Vi):-
 	X \= Y,
 	Vx=Vy).
 	
-%testar ops.
+%testar ops com optimizaçao.
 testar(Vi,Res):-
 	length(Vi,X),X<5.
 testar(Vi,Res):- 
