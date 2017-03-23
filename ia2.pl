@@ -1,34 +1,32 @@
 estado_inicial(e([
-          v(var_1,[1,2,3,4,5,6,7,8,9],_),
-          v(var_2,[1,2,3,4,5,6,7,8,9],_),
-          v(var_3,[1,2,3,4,5,6,7,8,9],_),
-          v(op_1,[soma,subtracao,multiplicacao,divisao],_),
-          v(op_2,[soma,subtracao,multiplicacao,divisao],_)],[])).
+          v(var(1),[1,2,3,4,5,6,7,8,9],_),
+          v(var(2),[1,2,3,4,5,6,7,8,9],_),
+          v(var(3),[1,2,3,4,5,6,7,8,9],_),
+          v(var(4),[soma,subtracao,multiplicacao,divisao],_),
+          v(var(5),[soma,subtracao,multiplicacao,divisao],_)
+          ],[])).
 
 %Restriçoes.
 ve_restricoes(e(Vni,Vi)):-
-	member(v(var_1,_,V1),Vi),
-	member(v(var_2,_,V2),Vi),
-	member(v(var_3,_,V3),Vi),
-	member(v(op_1,_,Op1),Vi),
-	member(v(op_2,_,Op2),Vi),
-	val_dif([V1,V2,V3]),
-	testar(V1,V2,V3,Op1,Op2,15).
-
-
-%valores diferentes.   
-val_dif([]).
-val_dif([H|T]):-
-	nao_duplicado(H,T),
-	val_dif(T).
-
-nao_duplicado(X,[]).
-nao_duplicado(X,[H|T]):-
-	\+(X=H),
-	nao_duplicado(X,T).
-
+	dif(Vi),
+	testar(Vi,15).
+%Dif.
+dif(Vi):-
+	\+ (member(v(var(X),_,Vx),Vi),
+	member(v(var(Y),_,Vy),Vi),
+	X \= Y,
+	Vx=Vy).
+	
 %testar ops.
-testar(A,B,C,Op1,Op2,Res):- teste(A,B,C,Op1,Op2,Res).
+testar(Vi,Res):-
+	length(Vi,X),X<5.
+testar(Vi,Res):- 
+	member(v(var(1),_,A),Vi),
+	member(v(var(2),_,B),Vi),
+	member(v(var(3),_,C),Vi),
+	member(v(var(4),_,Op1),Vi),
+	member(v(var(5),_,Op2),Vi),
+	teste(A,B,C,Op1,Op2,Res).
 
 teste(A,B,C,soma,soma,Res):- Res is A+B+C.
 teste(A,B,C,soma,subtracao,Res):- Res is A+B-C.

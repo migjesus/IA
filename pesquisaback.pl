@@ -1,4 +1,4 @@
-p:- estado_inicial(E0), back(E0,A), esc(A).
+p(A):- estado_inicial(E0), back(E0,A).
 
 back(e([],A),A).
 back(E,Sol):- sucessor(E,E1), ve_restricoes(E1),
