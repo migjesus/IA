@@ -1,4 +1,10 @@
-p(A,T):- estado_inicial(E0), back(E0,A), cpu_time(T).
+p(A,T):- 
+	estado_inicial(E0), 
+	statistics(runtime, [T0|_]), 
+	back(E0,A), 
+	statistics(runtime, [T1|_]),
+	T is T1 - T0.
+
 
 back(e([],A),A).
 back(E,Sol):- sucessor_fw(E,E1), ve_restricoes(E1),
