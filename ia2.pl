@@ -1,4 +1,4 @@
-
+%Trabalho realizado por: David Parreira – 33257 Miguel Jesus – 36926.
 estado_inicial(e([
           v(var(1),[4,5,6,7,8,9],_),
           v(var(2),[4,5,6,7,8,9],_),

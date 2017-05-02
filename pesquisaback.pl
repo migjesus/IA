@@ -1,4 +1,5 @@
-p(A,T):- 
+%Trabalho realizado por: David Parreira – 33257 Miguel Jesus – 36926.
+p(A,T):-
 	estado_inicial(E0), 
 	statistics(runtime, [T0|_]), 
 	back(E0,A), 
