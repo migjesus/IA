@@ -1,4 +1,4 @@
-g(Jogo):- [Jogo], estado_inicial(Ei), minimax_decidir(Ei,Op),
+g(Jogo):- [Jogo], estado_inicial(Ei), ai(Ei),
 write(Op),nl,op1(Ei,Op,Ef),write(Ef).
 
 % decide qual é a melhor jogada num estado do jogo
@@ -9,7 +9,17 @@ minimax_decidir(Ei,terminou):- terminal(Ei),!.
 
 %Para cada estado sucessor de Ei calcula o valor minimax do estado
 %Opf é o operador (jogada) que tem maior valor
+/*
+ai(E):- 
+		utilizador(J),
+		op1(E,J,Es),
+		minimax_decidir(E,Op),
+		op1(Es,Op,Ef),
+		ai(Ef).
 
+utilizador(J):- read(J).
+
+*/
 minimax_decidir(Ei,Opf):- 
 findall(Es-Op, op1(Ei,Op,Es),L),
 findall(Vc-Op,(member(E-Op,L), minimax_valor(E,Vc,1)),L1),
@@ -53,3 +63,18 @@ minimo([A|R],Val):- minimo(R,A,Val).
 minimo([],A,A).
 minimo([A|R],X,Val):- A > X,!, minimo(R,X,Val).
 minimo([A|R],_,Val):- minimo(R,A,Val).
+
+/*
+%Corte alpha Beta
+ab(Ei, Alpha, Beta, P):-
+	findall(Es-Op,op1(Ei,Op,Es),F),
+	P1 is P+1,
+	filhos(L, Alpha, Beta, P1).
+
+
+filhos([H|T],Apha,Beta,P):-
+	X is P mod 2, \+X=0,
+
+filhos([H|T],Apha,Beta,P):-
+	X is P mod 2, X=0,
+	*/
