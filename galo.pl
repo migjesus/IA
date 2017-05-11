@@ -1,5 +1,5 @@
-estado_inicial((o,[((1,1),o),((1,2),vazio),((1,3),o),
-					((2,1),vazio),((2,2),x),((2,3),x),
+estado_inicial((o,[((1,1),vazio),((1,2),vazio),((1,3),vazio),
+					((2,1),vazio),((2,2),vazio),((2,3),vazio),
 					((3,1),vazio),((3,2),vazio),((3,3),vazio)])).
 
 
